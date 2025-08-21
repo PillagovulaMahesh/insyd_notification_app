@@ -1,17 +1,27 @@
-// backend/src/models/User.js
+// backend/src/models/Event.js
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema(
+const eventSchema = new mongoose.Schema(
   {
-    username: {
+    type: {
       type: String,
+      required: true, // e.g., "like", "comment", "follow"
+    },
+    sourceUserId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
-    email: {
-      type: String,
+    targetUserId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    content: {
+      type: String, // e.g., "User A liked your post"
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Event", eventSchema);
